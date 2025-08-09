@@ -85,13 +85,13 @@ pub trait Generate: Debug {
 }
 ``` 
 
-each structure that you want to enable to generate IR must implement that trait. This gives us the ability to multiply structs together using rust's own traits:
+each structure that you want to enable to generate IR must implement that trait. This gives us the ability to "multiply" structs together using rust's own traits for instance:
 
 ```rust
-let square_def = Function::new(square.clone(), vec!["n"], |builder| {
+let square_def = Function::new(square.clone(), vec!["n"], {
     let n = Variable::local("n", (1, 1));
 
-    (n.clone() * n).ret().emit(builder); // We can multiply n by itself
+    (n.clone() * n).ret() // We can multiply n by itself
 });
 ```
 
