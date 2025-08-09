@@ -399,7 +399,7 @@ mod tests {
             .emit(&mut builder);
 
         let is_2pi = Variable::global("is_2pi");
-        Function::new(is_2pi, vec!["angle"], |builder| {
+        Function::new(is_2pi, vec!["angle"], {
             let angle = Variable::local("angle", (1, 1));
             let pi = Variable::global("pi");
 
@@ -430,10 +430,10 @@ mod tests {
 
         let square = Variable::global("square");
 
-        let square_def = Function::new(square, vec!["n"], |builder| {
+        let square_def = Function::new(square, vec!["n"], {
             let n = Variable::local("n", (1, 1));
 
-            (n * n).ret().emit(builder);
+            (n * n).ret()
         });
 
         square_def.emit(&mut builder);
