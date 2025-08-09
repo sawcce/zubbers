@@ -253,9 +253,16 @@ pub struct Function<'n, T> {
 }
 
 impl<'n, T> Function<'n, T> {
+    /// Body must contain at least one return for the function to be valid.  
+    /// As such, the body cannot be empty, or else zub will try to read the
+    /// next instruction of the function, which does not exist.
+    /// If you use some similar to Function::new(..., ..., {...; some_node}) be careful
+    /// to not add a trailing `;` which is an easy mistake to make (the error happens during)
+    /// execution which makes it hard to diagnose.  
+    /// TODO: Possible automatic return insertion/warning if missing?
     pub fn new<'a>(variable: Variable<'n>, args: Vec<&'a str>, body: T) -> Self
     where
-        T: Fn(&mut IrBuilder),
+        T: Generate,
     {
         Self {
             variable,
@@ -277,11 +284,11 @@ impl<'n, T> Debug for Function<'n, T> {
 
 impl<'n, T> Generate for Function<'n, T>
 where
-    T: Fn(&mut IrBuilder),
+    T: Generate,
 {
     fn generate(&self, context: &mut IrBuilder) -> ExprNode {
         let mut body_builder = IrBuilder::new();
-        (self.body)(&mut body_builder);
+        self.body.emit(&mut body_builder);
 
         context.scope_in();
         let body = body_builder.build();
