@@ -384,10 +384,10 @@ mod tests {
 
         let deg_to_rad = Variable::global("deg_to_rad");
 
-        Function::new(deg_to_rad, vec!["deg"], |builder| {
+        Function::new(deg_to_rad, vec!["deg"], {
             let deg = Variable::local("deg", (1, 1));
 
-            (deg / 360 * 2 * pi).ret().emit(builder);
+            (deg / 360 * 2 * pi).ret()
         })
         .emit(&mut builder);
 
@@ -399,7 +399,7 @@ mod tests {
             .emit(&mut builder);
 
         let is_2pi = Variable::global("is_2pi");
-        Function::new(is_2pi, vec!["angle"], |builder| {
+        Function::new(is_2pi, vec!["angle"], {
             let angle = Variable::local("angle", (1, 1));
             let pi = Variable::global("pi");
 
@@ -408,7 +408,6 @@ mod tests {
                 .if_true_do(true)
                 .else_do(false)
                 .ret()
-                .emit(builder)
         })
         .emit(&mut builder);
 
@@ -430,10 +429,10 @@ mod tests {
 
         let square = Variable::global("square");
 
-        let square_def = Function::new(square, vec!["n"], |builder| {
+        let square_def = Function::new(square, vec!["n"], {
             let n = Variable::local("n", (1, 1));
 
-            (n * n).ret().emit(builder);
+            (n * n).ret()
         });
 
         square_def.emit(&mut builder);
