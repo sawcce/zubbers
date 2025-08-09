@@ -2,8 +2,11 @@
 > A super-fast, stack-based virtual machine for dynamic languages
 
 # Warning
-This library has been forked for about a year, updates have been slow due to my studies
-feel free to open PRs/issues I will check them out as fast as I can.
+This library has been forked for a while but updates have been slow
+and inconsistent due to my studies. The project is not abandoned, though
+the usability may not be ideal and I can't guarantee a bug-free experience.
+Feel free to make PRs or issues if you encounter any bugs, I'll do my best
+to review them.
 
 ## Features
 
